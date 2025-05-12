@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -51,6 +52,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     //hilt
     implementation(libs.hilt.android) // 최신 버전 확인
@@ -72,6 +77,10 @@ dependencies {
 
     // Paging
     implementation(libs.androidx.paging.compose)
+
+    // moshi
+    implementation(libs.moshi.converter)
+    ksp(libs.moshi.kotlin.codegen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
