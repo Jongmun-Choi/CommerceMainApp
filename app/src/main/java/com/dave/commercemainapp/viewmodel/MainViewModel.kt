@@ -5,7 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.dave.commercemainapp.model.ProductResponse.Product
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.map
+import com.dave.commercemainapp.model.Product
 import com.dave.commercemainapp.model.SectionInfo
 import com.dave.commercemainapp.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,13 +47,13 @@ class MainViewModel @Inject constructor(application: Application, private val re
             try {
                 repository.getProductList(sectionId)
                     .onSuccess { response ->
-                        var map = _productList.value
+                        var map = _productList.value.toMutableMap()
                         if(map.containsKey(sectionId)) {
                             map.replace(sectionId, response.products)
                         }else {
                             map.put(sectionId, response.products)
                         }
-                        _productList.value = map
+                        _productList.emit(map)
                     }
                     .onFailure {
                         it.printStackTrace()

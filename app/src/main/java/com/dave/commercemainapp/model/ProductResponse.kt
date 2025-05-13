@@ -20,7 +20,16 @@ data class Product(
     @field:Json(name = "originalPrice")
     val originalPrice: Long,
     @field:Json(name = "discountedPrice")
-    val discountedPrice: Long,
+    val discountedPrice: Long = -1,
     @field:Json(name = "isSoldOut")
-    val isSoldOut: Boolean
-)
+    val isSoldOut: Boolean,
+) {
+    fun getDiscountPercent(): Int {
+        return ((originalPrice - discountedPrice) / originalPrice.toDouble() * 100).toInt()
+    }
+
+    fun isFavorite(): Boolean {
+        return false
+    }
+
+}
