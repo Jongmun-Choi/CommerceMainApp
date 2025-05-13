@@ -2,6 +2,8 @@ package com.dave.commercemainapp.di
 
 import android.content.Context
 import com.dave.commercemainapp.BuildConfig
+import com.dave.commercemainapp.network.ApiService
+import com.dave.commercemainapp.network.ResultFactory
 import com.kurly.android.mockserver.MockInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -21,6 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    private val resultFactory = ResultFactory()
 
     @Provides
     @Singleton
@@ -33,7 +36,7 @@ object NetworkModule {
     fun provideOkhttpClient(interceptor: MockInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level =
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
@@ -46,12 +49,16 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val moshi = Moshi.Builder().build()
         return Retrofit.Builder()
-            .baseUrl("https://your.api.url/") // 실제 API Base URL (Mock 사용 시에는 중요도 낮음)
+            .baseUrl("https://kurly.com") // 실제 API Base URL (Mock 사용 시에는 중요도 낮음)
             .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(resultFactory)
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
 
 }
