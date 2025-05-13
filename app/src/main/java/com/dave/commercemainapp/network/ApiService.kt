@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("/sections")
-    suspend fun getSections(@Query("page") page: Int): Result<SectionResponse>
+    suspend fun getSectionList(@Query("page") page: Int): Result<SectionResponse>
 
 
     @GET("/section/products")
