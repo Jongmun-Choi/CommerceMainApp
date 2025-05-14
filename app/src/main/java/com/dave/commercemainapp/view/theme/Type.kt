@@ -1,4 +1,4 @@
-package com.dave.commercemainapp.ui.theme
+package com.dave.commercemainapp.view.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

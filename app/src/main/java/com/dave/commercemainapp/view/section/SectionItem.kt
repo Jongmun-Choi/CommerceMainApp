@@ -1,4 +1,4 @@
-package com.dave.commercemainapp.ui.section
+package com.dave.commercemainapp.view.section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,14 +15,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dave.commercemainapp.model.SectionInfo
-import com.dave.commercemainapp.ui.product.ProductItem
+import com.dave.commercemainapp.view.product.ProductItem
 import com.dave.commercemainapp.viewmodel.MainViewModel
-
+import com.dave.commercemainapp.util.Utils.SectionType.*
 @Composable
 fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
 
@@ -33,24 +32,25 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
 
         Text(text = section.title)
         Spacer(modifier = Modifier.height(8.dp))
-        when(section.type) {
-            "vertical" -> {
-                Column(modifier = Modifier.fillMaxSize()) {
+        when(section.getSectionType()) {
+            VERTICAL -> {
+                Column(modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     productList.value[section.id]?.forEach { product ->
-                        ProductItem(product = product, section.type, viewModel)
+                        ProductItem(product = product, section.getSectionType(), viewModel)
                     }
                 }
             }
-            "horizontal" -> {
+            HORIZONTAL -> {
                 LazyRow(state = lazyListState,
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.type, viewModel)
+                        ProductItem(product = productList.value[section.id]!![index], section.getSectionType(), viewModel)
                     }
                 }
             }
-            "grid" -> {
+            GRID -> {
                 LazyVerticalGrid(modifier = Modifier
                                             .fillMaxWidth()
                                             .wrapContentHeight()
@@ -61,7 +61,7 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ){
                     items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.type, viewModel)
+                        ProductItem(product = productList.value[section.id]!![index], section.getSectionType(), viewModel)
                     }
                 }
             }

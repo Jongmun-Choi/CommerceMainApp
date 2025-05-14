@@ -1,5 +1,6 @@
-package com.dave.commercemainapp.ui.product
+package com.dave.commercemainapp.view.product
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,16 +36,18 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.dave.commercemainapp.R
 import com.dave.commercemainapp.model.Product
-import com.dave.commercemainapp.ui.theme.Black
-import com.dave.commercemainapp.ui.theme.DiscountPercent
-import com.dave.commercemainapp.ui.theme.Gray
-import com.dave.commercemainapp.ui.theme.White
+import com.dave.commercemainapp.view.theme.Black
+import com.dave.commercemainapp.view.theme.DiscountPercent
+import com.dave.commercemainapp.view.theme.Gray
+import com.dave.commercemainapp.view.theme.White
+import com.dave.commercemainapp.util.Utils.SectionType
+import com.dave.commercemainapp.util.Utils.SectionType.*
 import com.dave.commercemainapp.util.Utils.toPrice
 import com.dave.commercemainapp.viewmodel.MainViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel) {
+fun ProductItem(product: Product, sectionType: SectionType, viewModel: MainViewModel) {
 
     var isFavorite by remember { mutableStateOf(viewModel.isFavorite(product.id)) }
 
@@ -55,7 +58,8 @@ fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel)
     Card(
         modifier = getModifier(sectionType),
         shape = RoundedCornerShape(12.dp),
-        colors = CardColors(containerColor = White, contentColor = White, disabledContainerColor = White, disabledContentColor = White)
+        colors = CardColors(containerColor = White, contentColor = White, disabledContainerColor = White, disabledContentColor = White),
+        border = BorderStroke(width = 0.1.dp, color = Gray)
     ) {
         Column(modifier = Modifier.background(color = White)) {
             Box {
@@ -63,7 +67,7 @@ fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel)
                     model = product.image,
                     modifier = getImageModifier(sectionType),
                     contentDescription = "",
-                    contentScale = if (sectionType == "vertical") ContentScale.FillBounds else ContentScale.Fit
+                    contentScale = if (sectionType == VERTICAL) ContentScale.FillBounds else ContentScale.Fit
                 )
 
                 Image(
@@ -71,14 +75,14 @@ fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel)
                         onClick = {
                             isFavorite = !isFavorite
                         }),
-                    contentDescription = "", painter = if(isFavorite) painterResource(id = com.dave.commercemainapp.R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_favorite_border),
+                    contentDescription = "", painter = if(isFavorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_favorite_border),
                 )
             }
 
             Text(
                 modifier = Modifier.padding(start = 2.dp),
                 text = product.name,
-                maxLines = if (sectionType == "vertical") 1 else 2,
+                maxLines = if (sectionType == VERTICAL) 1 else 2,
                 overflow = TextOverflow.Ellipsis,
                 color = Black,
                 fontSize = 15.sp,
@@ -90,7 +94,7 @@ fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel)
             } else {
 
                 when (sectionType) {
-                    "horizontal", "grid" -> {
+                    HORIZONTAL, GRID -> {
                         // 할인률
                         Column(modifier = Modifier.padding(start = 2.dp)) {
                             Row(
@@ -154,16 +158,16 @@ fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel)
     }
 }
 
-fun getModifier(sectionType: String): Modifier {
-    return if(sectionType == "vertical") {
+fun getModifier(sectionType: SectionType): Modifier {
+    return if(sectionType == VERTICAL) {
         Modifier.fillMaxWidth()
     }else {
         Modifier.widthIn(max = 100.dp).height(220.dp)
     }
 }
 
-fun getImageModifier(sectionType: String): Modifier {
-    return if(sectionType == "vertical") {
+fun getImageModifier(sectionType: SectionType): Modifier {
+    return if(sectionType == VERTICAL) {
         Modifier.aspectRatio(1.5f)
     }else {
         Modifier.fillMaxWidth()
