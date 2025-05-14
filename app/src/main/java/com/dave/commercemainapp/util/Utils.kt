@@ -6,4 +6,9 @@ object Utils {
         return String.format("%,d원", this)
     }
 
+    enum class SectionType(typeString: String) {
+        HORIZONTAL("horizontal"),
+        VERTICAL("vertical"),
+        GRID("grid")
+    }
 }
