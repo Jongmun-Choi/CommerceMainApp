@@ -1,14 +1,18 @@
 package com.dave.commercemainapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import com.dave.commercemainapp.ui.MainScreen
-import com.dave.commercemainapp.ui.theme.CommerceMainAppTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.dave.commercemainapp.view.MainScreen
+import com.dave.commercemainapp.view.theme.CommerceMainAppTheme
 import com.dave.commercemainapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -16,7 +20,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
+        installSplashScreen()
+        enableEdgeToEdge()
         viewModel.getFavorite()
         setContent {
             CommerceMainAppTheme {

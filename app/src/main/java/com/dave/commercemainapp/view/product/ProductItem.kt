@@ -1,5 +1,6 @@
-package com.dave.commercemainapp.ui.product
+package com.dave.commercemainapp.view.product
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,10 +36,10 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.dave.commercemainapp.R
 import com.dave.commercemainapp.model.Product
-import com.dave.commercemainapp.ui.theme.Black
-import com.dave.commercemainapp.ui.theme.DiscountPercent
-import com.dave.commercemainapp.ui.theme.Gray
-import com.dave.commercemainapp.ui.theme.White
+import com.dave.commercemainapp.view.theme.Black
+import com.dave.commercemainapp.view.theme.DiscountPercent
+import com.dave.commercemainapp.view.theme.Gray
+import com.dave.commercemainapp.view.theme.White
 import com.dave.commercemainapp.util.Utils.SectionType
 import com.dave.commercemainapp.util.Utils.SectionType.*
 import com.dave.commercemainapp.util.Utils.toPrice
@@ -57,7 +58,8 @@ fun ProductItem(product: Product, sectionType: SectionType, viewModel: MainViewM
     Card(
         modifier = getModifier(sectionType),
         shape = RoundedCornerShape(12.dp),
-        colors = CardColors(containerColor = White, contentColor = White, disabledContainerColor = White, disabledContentColor = White)
+        colors = CardColors(containerColor = White, contentColor = White, disabledContainerColor = White, disabledContentColor = White),
+        border = BorderStroke(width = 0.1.dp, color = Gray)
     ) {
         Column(modifier = Modifier.background(color = White)) {
             Box {
