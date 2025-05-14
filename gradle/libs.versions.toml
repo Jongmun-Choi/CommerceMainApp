@@ -24,7 +24,6 @@ kotlinxCoroutinesCore = "1.9.0"
 glideCompose = "1.0.0-beta01"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.6"
-accompanistPager = "0.36.0"
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,7 +45,6 @@ androidx-paging-compose = { module = "androidx.paging:paging-compose", version.r
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 glideCompose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
