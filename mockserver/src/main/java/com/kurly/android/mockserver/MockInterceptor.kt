@@ -15,7 +15,7 @@ class MockInterceptor(context: Context) : Interceptor {
     private val mockServer = MockServer(AssetFileProvider(context))
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        SystemClock.sleep(Random.nextInt(1, 3) * 1000L)
+//        SystemClock.sleep(Random.nextInt(1, 3) * 1000L)
 
         val responseString = mockServer.get(chain.request())
 

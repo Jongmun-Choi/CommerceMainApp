@@ -24,6 +24,10 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private val resultFactory = ResultFactory()
+    val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level =
+            HttpLoggingInterceptor.Level.BODY
+    }
 
     @Provides
     @Singleton
@@ -31,13 +35,9 @@ object NetworkModule {
         return MockInterceptor(context)
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideOkhttpClient(interceptor: MockInterceptor): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level =
-                HttpLoggingInterceptor.Level.BODY
-        }
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(interceptor)
