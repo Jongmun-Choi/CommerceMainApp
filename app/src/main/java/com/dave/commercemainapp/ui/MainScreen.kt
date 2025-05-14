@@ -32,8 +32,15 @@ fun MainScreen(viewModel: MainViewModel) {
     }
 
     LaunchedEffect(isRefreshing.value) {
-        if(isRefreshing.value || sectionList.itemCount == 0) viewModel.getSectionList(true)
+        if(isRefreshing.value || sectionList.itemCount == 0) viewModel.getSectionList(isRefreshing.value)
         isRefreshing.value = false
+        if(isRefreshing.value) sectionList.refresh()
+    }
+
+    LaunchedEffect(sectionList.itemCount) {
+        for(i in 0 until sectionList.itemCount) {
+            viewModel.getProductList(sectionList[i]!!.id)
+        }
     }
 
     PullToRefreshBox(
@@ -52,8 +59,7 @@ fun MainScreen(viewModel: MainViewModel) {
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize(),
             state = lazyListState,
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            verticalArrangement = Arrangement.Top) {
             if(sectionList.itemCount>0) {
                 items(sectionList.itemCount) { index ->
                     SectionItem(viewModel = viewModel, section = sectionList[index]!!)

@@ -2,6 +2,7 @@ package com.dave.commercemainapp.ui.product
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,10 +40,17 @@ import com.dave.commercemainapp.ui.theme.DiscountPercent
 import com.dave.commercemainapp.ui.theme.Gray
 import com.dave.commercemainapp.ui.theme.White
 import com.dave.commercemainapp.util.Utils.toPrice
+import com.dave.commercemainapp.viewmodel.MainViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ProductItem(product: Product, sectionType: String) {
+fun ProductItem(product: Product, sectionType: String, viewModel: MainViewModel) {
+
+    var isFavorite by remember { mutableStateOf(viewModel.isFavorite(product.id)) }
+
+    LaunchedEffect(isFavorite) {
+        viewModel.setFavorite(product.id, isFavorite)
+    }
 
     Card(
         modifier = getModifier(sectionType),
@@ -54,8 +67,11 @@ fun ProductItem(product: Product, sectionType: String) {
                 )
 
                 Image(
-                    modifier = Modifier.padding(top = 4.dp, end = 4.dp).align(Alignment.TopEnd),
-                    contentDescription = "", painter = if(product.isFavorite()) painterResource(id = com.dave.commercemainapp.R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_favorite_border)
+                    modifier = Modifier.padding(top = 4.dp, end = 4.dp).align(Alignment.TopEnd).clickable(enabled = true,
+                        onClick = {
+                            isFavorite = !isFavorite
+                        }),
+                    contentDescription = "", painter = if(isFavorite) painterResource(id = com.dave.commercemainapp.R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_favorite_border),
                 )
             }
 

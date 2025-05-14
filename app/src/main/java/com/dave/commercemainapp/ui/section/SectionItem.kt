@@ -2,7 +2,6 @@ package com.dave.commercemainapp.ui.section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -30,9 +28,6 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
 
     val productList = viewModel.productList.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
-    LaunchedEffect(Unit) {
-        if(!productList.value.contains(section.id)) viewModel.getProductList(section.id)
-    }
 
     Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
 
@@ -42,7 +37,7 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
             "vertical" -> {
                 Column(modifier = Modifier.fillMaxSize()) {
                     productList.value[section.id]?.forEach { product ->
-                        ProductItem(product = product, section.type)
+                        ProductItem(product = product, section.type, viewModel)
                     }
                 }
             }
@@ -51,7 +46,7 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.type)
+                        ProductItem(product = productList.value[section.id]!![index], section.type, viewModel)
                     }
                 }
             }
@@ -66,7 +61,7 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ){
                     items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.type)
+                        ProductItem(product = productList.value[section.id]!![index], section.type, viewModel)
                     }
                 }
             }
