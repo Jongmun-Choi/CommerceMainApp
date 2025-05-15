@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //hilt
-    implementation(libs.hilt.android) // 최신 버전 확인
+    implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
     // retrofit2
