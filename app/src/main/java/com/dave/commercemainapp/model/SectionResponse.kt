@@ -2,6 +2,7 @@ package com.dave.commercemainapp.model
 
 
 import com.dave.commercemainapp.util.Utils.SectionType
+import com.dave.commercemainapp.util.Utils.safeValueOf
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -23,6 +24,6 @@ data class SectionInfo(
     val url : String
 ) {
     fun getSectionType() : SectionType {
-        return SectionType.valueOf(type.uppercase())
+        return safeValueOf(type.uppercase(), SectionType.VERTICAL)
     }
 }

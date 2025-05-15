@@ -14,8 +14,8 @@ android {
         applicationId = "com.dave.commercemainapp"
         minSdk = 28
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //hilt
-    implementation(libs.hilt.android) // 최신 버전 확인
+    implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
     // retrofit2

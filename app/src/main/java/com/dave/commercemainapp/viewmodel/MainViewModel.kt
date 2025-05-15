@@ -99,8 +99,4 @@ class MainViewModel @Inject constructor(application: Application, private val re
         }
     }
 
-    companion object {
-        val FAVORITE_KEY = stringPreferencesKey("favorite")
-    }
-
 }
