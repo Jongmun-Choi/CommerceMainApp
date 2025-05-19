@@ -42,6 +42,8 @@ import com.dave.commercemainapp.view.theme.Gray
 import com.dave.commercemainapp.view.theme.White
 import com.dave.commercemainapp.util.Utils.SectionType
 import com.dave.commercemainapp.util.Utils.SectionType.*
+import com.dave.commercemainapp.util.Utils.getImageModifier
+import com.dave.commercemainapp.util.Utils.getProductItemModifier
 import com.dave.commercemainapp.util.Utils.toPrice
 import com.dave.commercemainapp.viewmodel.MainViewModel
 
@@ -56,7 +58,7 @@ fun ProductItem(product: Product, sectionType: SectionType, viewModel: MainViewM
     }
 
     Card(
-        modifier = getModifier(sectionType),
+        modifier = getProductItemModifier(sectionType),
         shape = RoundedCornerShape(12.dp),
         colors = CardColors(containerColor = White, contentColor = White, disabledContainerColor = White, disabledContentColor = White),
         border = BorderStroke(width = 0.1.dp, color = Gray)
@@ -158,18 +160,3 @@ fun ProductItem(product: Product, sectionType: SectionType, viewModel: MainViewM
     }
 }
 
-fun getModifier(sectionType: SectionType): Modifier {
-    return if(sectionType == VERTICAL) {
-        Modifier.fillMaxWidth()
-    }else {
-        Modifier.widthIn(max = 100.dp).height(220.dp)
-    }
-}
-
-fun getImageModifier(sectionType: SectionType): Modifier {
-    return if(sectionType == VERTICAL) {
-        Modifier.aspectRatio(1.5f)
-    }else {
-        Modifier.fillMaxWidth()
-    }
-}

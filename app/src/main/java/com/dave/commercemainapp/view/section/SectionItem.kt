@@ -22,6 +22,8 @@ import com.dave.commercemainapp.model.SectionInfo
 import com.dave.commercemainapp.view.product.ProductItem
 import com.dave.commercemainapp.viewmodel.MainViewModel
 import com.dave.commercemainapp.util.Utils.SectionType.*
+import com.dave.commercemainapp.view.product.PlaceholderItem
+
 @Composable
 fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
 
@@ -36,8 +38,12 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
             VERTICAL -> {
                 Column(modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    productList.value[section.id]?.forEach { product ->
-                        ProductItem(product = product, section.getSectionType(), viewModel)
+                    if(productList.value.contains(section.id)) {
+                        productList.value[section.id]?.forEach { product ->
+                            ProductItem(product = product, section.getSectionType(), viewModel)
+                        }
+                    }else {
+                        PlaceholderItem(section.getSectionType())
                     }
                 }
             }
@@ -45,8 +51,18 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
                 LazyRow(state = lazyListState,
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.getSectionType(), viewModel)
+                    if(productList.value.contains(section.id)) {
+                        items(productList.value[section.id]?.size ?: 0) { index ->
+                            ProductItem(
+                                product = productList.value[section.id]!![index],
+                                section.getSectionType(),
+                                viewModel
+                            )
+                        }
+                    }else {
+                        items(4) {
+                            PlaceholderItem(section.getSectionType())
+                        }
                     }
                 }
             }
@@ -60,8 +76,18 @@ fun SectionItem(viewModel : MainViewModel, section: SectionInfo) {
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ){
-                    items(productList.value[section.id]?.size ?: 0) { index ->
-                        ProductItem(product = productList.value[section.id]!![index], section.getSectionType(), viewModel)
+                    if(productList.value.contains(section.id)) {
+                        items(productList.value[section.id]?.size ?: 0) { index ->
+                            ProductItem(
+                                product = productList.value[section.id]!![index],
+                                section.getSectionType(),
+                                viewModel
+                            )
+                        }
+                    }else {
+                        items(6) {
+                            PlaceholderItem(section.getSectionType())
+                        }
                     }
                 }
             }
